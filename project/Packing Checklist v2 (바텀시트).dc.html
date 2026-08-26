@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FFE0AE;-webkit-font-smoothing:antialiased;font-family:Pretendard,'Pretendard Variable',-apple-system,sans-serif}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input{font:inherit;color:inherit;background:none;border:none;outline:none}
+a{color:#FF5A1F}a:hover{color:#17140F}
+::-webkit-scrollbar{width:0;height:0}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.32) rotate(-7deg)}100%{transform:scale(1)}}
+@keyframes tick{0%{transform:translateY(10px) scale(.7);opacity:0}100%{transform:none;opacity:1}}
+@keyframes rise{0%{transform:translateY(120%)}70%{transform:translateY(-8px)}100%{transform:none}}
+@keyframes toastin{0%{transform:translateY(80px) rotate(-2deg);opacity:0}100%{transform:none;opacity:1}}
+@keyframes shimmer{0%{transform:translateY(0)}100%{transform:translateY(150px)}}
+@keyframes blink{50%{opacity:.3}}
+@keyframes wiggle{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes fadein{0%{opacity:0;transform:scale(.98)}100%{opacity:1;transform:none}}
+@keyframes veil{0%{opacity:0}100%{opacity:1}}
+@keyframes cardup{0%{transform:translateY(26px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes b1{0%{transform:none;opacity:1}100%{transform:translate(-120px,-190px) rotate(320deg);opacity:0}}
+@keyframes b2{0%{transform:none;opacity:1}100%{transform:translate(120px,-200px) rotate(-300deg);opacity:0}}
+@keyframes b3{0%{transform:none;opacity:1}100%{transform:translate(-190px,-90px) rotate(200deg);opacity:0}}
+@keyframes b4{0%{transform:none;opacity:1}100%{transform:translate(190px,-70px) rotate(-240deg);opacity:0}}
+@keyframes b5{0%{transform:none;opacity:1}100%{transform:translate(-60px,-230px) rotate(180deg);opacity:0}}
+@keyframes b6{0%{transform:none;opacity:1}100%{transform:translate(60px,-240px) rotate(-160deg);opacity:0}}
+@keyframes b7{0%{transform:none;opacity:1}100%{transform:translate(-215px,20px) rotate(260deg);opacity:0}}
+@keyframes b8{0%{transform:none;opacity:1}100%{transform:translate(215px,10px) rotate(-280deg);opacity:0}}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px 16px;background:#FFE0AE">
+<div style="width:390px;height:844px;background:#FFFBF3;border:3.5px solid #17140F;border-radius:46px;box-shadow:10px 12px 0 #17140F;overflow:hidden;position:relative;display:flex;flex-direction:column">
+
+  <div style="height:48px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 4px;font:700 12px/1 'Space Grotesk',monospace;color:#17140F">
+    <span>9:41</span><span style="letter-spacing:.06em">▮▮▮ ⌁</span>
+  </div>
+
+  <div style="flex:1;min-height:0;position:relative">
+
+    <!-- 온보딩 -->
+    <sc-if value="{{ isOb }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:14px 22px 24px;overflow-y:auto;animation:fadein .24s ease both">
+      <div style="display:inline-flex;align-self:flex-start;align-items:center;gap:7px;background:#FF5A1F;color:#FFF;border:2.5px solid #17140F;border-radius:99px;padding:6px 13px;box-shadow:3px 3px 0 #17140F;font:700 11.5px/1 'Space Grotesk',monospace;letter-spacing:.1em">PACK IT</div>
+      <div style="margin-top:20px;font-size:34px;font-weight:800;letter-spacing:-.045em;line-height:1.22;color:#17140F">짐은 매번<br>거의 똑같잖아요</div>
+      <div style="margin-top:12px;font-size:14px;line-height:1.6;color:#6B6255">한 번만 만들어두면, 다음 여행엔<br>체크만 하면 끝. 뭘로 시작할래요?</div>
+      <div style="margin-top:26px;display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ packs }}" as="p" hint-placeholder-count="3">
+          <button onClick="{{ p.start }}" style="display:flex;align-items:center;gap:14px;text-align:left;background:#FFF;border:2.5px solid #17140F;border-radius:20px;padding:14px;box-shadow:4px 4px 0 #17140F;transition:transform .16s cubic-bezier(.34,1.56,.64,1),box-shadow .16s" style-hover="transform:translate(-2px,-2px);box-shadow:7px 7px 0 #17140F" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #17140F">
+            <span style="width:56px;height:56px;flex:none;border:2.5px solid #17140F;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;font:700 20px/1 'Space Grotesk',monospace;{{ p.chipDyn }}">
+              {{ p.count }}
+              <em style="font:700 8px/1 'Space Grotesk',monospace;font-style:normal;letter-spacing:.1em;margin-top:3px;opacity:.65">ITEMS</em>
+            </span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:17.5px;font-weight:800;letter-spacing:-.03em;color:#17140F">{{ p.n }}</span>
+              <span style="display:block;margin-top:4px;font-size:12.5px;line-height:1.45;color:#6B6255">{{ p.d }}</span>
+            </span>
+            <span style="font:700 18px/1 'Space Grotesk',monospace;color:#17140F">→</span>
+          </button>
+        </sc-for>
+        <button onClick="{{ openCamera }}" style="display:flex;align-items:center;gap:12px;text-align:left;background:#FFF3D6;border:2.5px dashed #17140F;border-radius:20px;padding:16px 14px;transition:transform .16s" style-hover="transform:translate(-2px,-2px)">
+          <span style="width:34px;height:34px;flex:none;border:2.5px solid #17140F;border-radius:10px;background:#FFF;display:flex;align-items:center;justify-content:center;font:700 13px/1 'Space Grotesk',monospace">◎</span>
+          <span style="flex:1;font-size:14.5px;font-weight:700;letter-spacing:-.02em;color:#17140F">가방 사진으로 만들기</span>
+          <span style="font:700 9.5px/1 'Space Grotesk',monospace;letter-spacing:.12em;border:2px solid #17140F;border-radius:99px;padding:4px 7px;background:#C6F24A">DEMO</span>
+        </button>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- 체크리스트 (기본 화면) -->
+    <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;animation:fadein .24s ease both">
+      <div style="flex:none;padding:8px 22px 14px;background:#FFFBF3;border-bottom:2.5px solid #17140F">
+        <div style="display:flex;align-items:center;gap:8px">
+          <sc-if value="{{ renaming }}" hint-placeholder-val="{{ false }}">
+            <input value="{{ nameDraft }}" onChange="{{ onNameInput }}" onKeyDown="{{ onNameKey }}" onBlur="{{ commitName }}" autoFocus="{{ true }}" style="flex:1;font-size:25px;font-weight:800;letter-spacing:-.04em;color:#17140F;border-bottom:3px solid #FF5A1F;padding-bottom:2px">
+          </sc-if>
+          <sc-if value="{{ notRenaming }}" hint-placeholder-val="{{ true }}">
+            <span style="flex:1;font-size:25px;font-weight:800;letter-spacing:-.04em;color:#17140F">{{ listName }}</span>
+          </sc-if>
+          <button onClick="{{ startRename }}" aria-label="이름 수정" style="width:36px;height:36px;flex:none;border:2.5px solid #17140F;border-radius:12px;background:#FFF;box-shadow:2.5px 2.5px 0 #17140F;font-size:13px;transition:transform .14s" style-active="transform:translate(2px,2px);box-shadow:0 0 0 #17140F">✎</button>
+        </div>
+        <div style="margin-top:14px;display:flex;align-items:flex-end;gap:10px">
+          <span style="font:700 46px/0.9 'Space Grotesk',monospace;color:#17140F;{{ countDyn }}">{{ leftCount }}</span>
+          <span style="font-size:14px;font-weight:700;letter-spacing:-.02em;color:#17140F;padding-bottom:5px">{{ leftLabel }}</span>
+          <span style="flex:1"></span>
+          <span style="font:700 12px/1 'Space Grotesk',monospace;color:#6B6255;padding-bottom:7px">{{ ratio }}</span>
+        </div>
+        <div style="margin-top:11px;height:18px;border:2.5px solid #17140F;border-radius:99px;background:#FFF;overflow:hidden;padding:2.5px">
+          <div style="height:100%;border-radius:99px;transition:width .5s cubic-bezier(.34,1.4,.64,1),background .3s;{{ barDyn }}"></div>
+        </div>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;padding:14px 22px 120px">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ items }}" as="it" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:12px;border:2.5px solid #17140F;border-radius:18px;padding:11px 12px;transition:transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .18s,background .2s;{{ it.rowDyn }}">
+              <button onClick="{{ it.toggle }}" aria-label="체크" style="width:30px;height:30px;flex:none;border:2.5px solid #17140F;border-radius:10px;display:flex;align-items:center;justify-content:center;font:700 15px/1 'Space Grotesk',monospace;transition:background .18s;{{ it.boxDyn }}">{{ it.mark }}</button>
+              <sc-if value="{{ it.editing }}" hint-placeholder-val="{{ false }}">
+                <input value="{{ editDraft }}" onChange="{{ onEditInput }}" onKeyDown="{{ onEditKey }}" onBlur="{{ commitEdit }}" autoFocus="{{ true }}" style="flex:1;min-width:0;font-size:16px;font-weight:600;letter-spacing:-.02em;border-bottom:3px solid #FF5A1F">
+              </sc-if>
+              <sc-if value="{{ it.notEditing }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ it.toggle }}" style="flex:1;min-width:0;text-align:left;font-size:16px;font-weight:600;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:color .2s;{{ it.labelDyn }}">{{ it.label }}</button>
+              </sc-if>
+              <button onClick="{{ it.edit }}" aria-label="이름 수정" style="width:26px;height:26px;flex:none;border-radius:8px;font-size:11px;color:#A79C8B;transition:color .14s" style-hover="color:#17140F">✎</button>
+              <button onClick="{{ it.remove }}" aria-label="삭제" style="width:26px;height:26px;flex:none;border-radius:8px;font:700 14px/1 'Space Grotesk',monospace;color:#A79C8B;transition:color .14s,transform .14s" style-hover="color:#FF5A1F;transform:rotate(90deg)">×</button>
+            </div>
+          </sc-for>
+          <div style="display:flex;align-items:center;gap:12px;border:2.5px dashed #17140F;border-radius:18px;padding:11px 12px;background:#FFF3D6">
+            <span style="width:30px;height:30px;flex:none;border:2.5px solid #17140F;border-radius:10px;background:#FFF;display:flex;align-items:center;justify-content:center;font:700 15px/1 'Space Grotesk',monospace">+</span>
+            <input value="{{ draft }}" onChange="{{ onDraft }}" onKeyDown="{{ onDraftKey }}" placeholder="뭐 더 챙길까요?" style="flex:1;min-width:0;font-size:16px;font-weight:600;letter-spacing:-.02em"></input>
+          </div>
+        </div>
+      </div>
+
+      <!-- 완료 시트 -->
+      <sc-if value="{{ allDone }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:0;right:0;bottom:0;z-index:9;pointer-events:none">
+        <div style="position:absolute;left:50%;bottom:120px;width:0;height:0">
+          <sc-for list="{{ confetti }}" as="c" hint-placeholder-count="0">
+            <span style="position:absolute;width:13px;height:13px;border:2px solid #17140F;{{ c.dyn }}"></span>
+          </sc-for>
+        </div>
+        <div style="margin:0 14px 16px;background:#17140F;border-radius:24px;padding:18px 18px 16px;animation:rise .5s cubic-bezier(.34,1.4,.64,1) both;pointer-events:auto">
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="width:30px;height:30px;border:2.5px solid #FFFBF3;border-radius:10px;background:#C6F24A;display:flex;align-items:center;justify-content:center;font:700 15px/1 'Space Grotesk',monospace;color:#17140F;animation:wiggle 1.1s ease-in-out infinite">✓</span>
+            <span style="font-size:19px;font-weight:800;letter-spacing:-.03em;color:#FFFBF3">다 챙겼다!</span>
+          </div>
+          <div style="margin-top:7px;font-size:12.5px;color:#A79C8B">{{ doneNote }} 가방 닫아도 돼요.</div>
+          <button onClick="{{ restart }}" style="margin-top:14px;width:100%;height:50px;background:#C6F24A;border:2.5px solid #FFFBF3;border-radius:16px;font-size:14.5px;font-weight:800;letter-spacing:-.02em;color:#17140F;transition:transform .14s" style-active="transform:scale(.97)">보관함에 넣고 새로 시작</button>
+        </div>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+
+    <!-- 사진 인식 -->
+    <sc-if value="{{ scanOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;z-index:40;background:#FFFBF3;display:flex;flex-direction:column;padding:12px 22px 22px;animation:fadein .2s ease both">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <button onClick="{{ closeScan }}" style="height:34px;padding:0 12px;border:2.5px solid #17140F;border-radius:99px;background:#FFF;font:700 11px/1 'Space Grotesk',monospace;letter-spacing:.08em">← BACK</button>
+        <span style="font:700 11px/1 'Space Grotesk',monospace;letter-spacing:.1em;color:#6B6255">{{ scanCount }}</span>
+      </div>
+      <div style="margin-top:14px;height:150px;flex:none;border:2.5px solid #17140F;border-radius:20px;overflow:hidden;position:relative;background:repeating-linear-gradient(135deg,#FFF3D6 0 9px,#FFE0AE 9px 18px)">
+        <sc-if value="{{ hasPhoto }}" hint-placeholder-val="{{ false }}">
+          <div style="width:100%;height:100%;background-size:cover;background-position:center;{{ photoDyn }}"></div>
+        </sc-if>
+        <sc-if value="{{ scanning }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:0;right:0;top:0;height:70px;background:linear-gradient(#C6F24A00,#C6F24A80);animation:shimmer 1s linear infinite"></div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ scanning }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:22px">
+          <div style="font-size:21px;font-weight:800;letter-spacing:-.035em;color:#17140F">사진에서 찾는 중…</div>
+          <div style="margin-top:16px;font:700 12px/1 'Space Grotesk',monospace;letter-spacing:.14em;color:#6B6255;animation:blink 1s infinite">SCANNING</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ scanDone }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:18px;flex:1;min-height:0;display:flex;flex-direction:column">
+          <div style="font-size:21px;font-weight:800;letter-spacing:-.035em;color:#17140F">{{ selCount }}개 찾았어요</div>
+          <div style="margin-top:6px;font-size:12.5px;line-height:1.5;color:#6B6255">맞는 것만 남겨주세요. 빠진 건 나중에 추가하면 돼요.</div>
+          <div style="margin-top:14px;flex:1;overflow-y:auto;display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;padding-bottom:6px">
+            <sc-for list="{{ tokens }}" as="t" hint-placeholder-count="9">
+              <button onClick="{{ t.toggle }}" style="height:40px;padding:0 14px;border:2.5px solid #17140F;border-radius:99px;display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;letter-spacing:-.02em;transition:transform .14s cubic-bezier(.34,1.56,.64,1);{{ t.dyn }}" style-active="transform:scale(.92)">{{ t.mark }} {{ t.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <button onClick="{{ acceptScan }}" disabled="{{ scanCtaOff }}" style="margin-top:14px;flex:none;height:58px;border:2.5px solid #17140F;border-radius:20px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;transition:transform .14s;{{ ctaDyn }}" style-active="transform:translate(3px,3px);box-shadow:0 0 0 #17140F">
+        <b style="font-size:16px;font-weight:800;letter-spacing:-.025em">이 목록으로 시작</b>
+        <i style="font:700 13px/1 'Space Grotesk',monospace;font-style:normal;opacity:.8">{{ scanN }}</i>
+      </button>
+    </div>
+    </sc-if>
+
+    <!-- 바텀시트 딤 -->
+    <sc-if value="{{ sheetOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeSheet }}" style="position:absolute;inset:0;z-index:14;background:#17140F66;animation:veil .22s ease both"></div>
+    </sc-if>
+
+    <!-- 토스트 -->
+    <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:14px;right:14px;bottom:14px;z-index:45;background:#17140F;border-radius:20px;min-height:54px;display:flex;align-items:center;gap:10px;padding:0 8px 0 16px;animation:toastin .3s cubic-bezier(.34,1.4,.64,1) both">
+      <span style="flex:1;font-size:13px;font-weight:600;letter-spacing:-.02em;color:#FFFBF3">{{ toastMsg }}</span>
+      <sc-if value="{{ canUndo }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ doUndo }}" style="height:40px;padding:0 14px;border-radius:12px;background:#FF5A1F;color:#FFF;font:700 11px/1 'Space Grotesk',monospace;letter-spacing:.08em;transition:transform .14s" style-active="transform:scale(.94)">UNDO</button>
+      </sc-if>
+    </div>
+    </sc-if>
+  </div>
+
+  <!-- 바텀시트 -->
+  <sc-if value="{{ notOb }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;left:0;right:0;bottom:0;z-index:16;height:600px;background:#FFFBF3;border-top:3.5px solid #17140F;border-radius:34px 34px 0 0;box-shadow:0 -10px 0 #17140F1A;display:flex;flex-direction:column;transition:transform .42s cubic-bezier(.3,1.25,.5,1);{{ sheetDyn }}">
+    <button onClick="{{ toggleSheet }}" aria-label="시트 닫기" style="flex:none;padding:12px 0 6px;display:flex;flex-direction:column;align-items:center;gap:10px">
+      <span style="width:56px;height:6px;border-radius:99px;background:#17140F;transition:width .2s"></span>
+    </button>
+    <div style="flex:none;padding:2px 22px 12px;display:flex;align-items:flex-end;gap:10px">
+      <span style="font-size:24px;font-weight:800;letter-spacing:-.04em;color:#17140F">최근 체크리스트</span>
+      <span style="flex:1"></span>
+      <span style="font:700 11px/1 'Space Grotesk',monospace;letter-spacing:.1em;color:#6B6255;padding-bottom:5px">{{ histCount }}</span>
+    </div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:0 22px 106px">
+      <sc-if value="{{ noHist }}" hint-placeholder-val="{{ true }}">
+        <div style="border:2.5px dashed #17140F;border-radius:18px;padding:22px 16px;background:#FFF3D6;font-size:13px;line-height:1.6;color:#6B6255">아직 지난 목록이 없어요.<br>지금 목록을 마무리하면 여기 쌓입니다.</div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ hist }}" as="h" hint-placeholder-count="0">
+          <button onClick="{{ h.restore }}" style="text-align:left;background:#FFF;border:2.5px solid #17140F;border-radius:18px;padding:13px;box-shadow:3px 3px 0 #17140F;transition:transform .16s,box-shadow .16s;{{ h.anim }}" style-hover="transform:translate(-2px,-2px);box-shadow:6px 6px 0 #17140F" style-active="transform:translate(3px,3px);box-shadow:0 0 0 #17140F">
+            <span style="display:flex;align-items:baseline;gap:10px">
+              <span style="flex:1;font-size:15.5px;font-weight:800;letter-spacing:-.03em;color:#17140F">{{ h.name }}</span>
+              <span style="font:700 11px/1 'Space Grotesk',monospace;color:#6B6255">{{ h.meta }}</span>
+            </span>
+            <span style="display:block;margin-top:7px;font-size:12.5px;color:#6B6255;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ h.preview }}</span>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="margin-top:24px;display:inline-flex;align-items:center;gap:7px;background:#2F4BFF;color:#FFF;border:2.5px solid #17140F;border-radius:99px;padding:5px 12px;box-shadow:3px 3px 0 #17140F;font:700 10.5px/1 'Space Grotesk',monospace;letter-spacing:.12em">기본 목록</div>
+      <div style="margin-top:12px;display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ packs }}" as="p" hint-placeholder-count="3">
+          <button onClick="{{ p.start }}" style="display:flex;align-items:center;gap:12px;text-align:left;background:#FFF;border:2.5px solid #17140F;border-radius:18px;padding:12px;box-shadow:3px 3px 0 #17140F;transition:transform .16s,box-shadow .16s" style-hover="transform:translate(-2px,-2px);box-shadow:6px 6px 0 #17140F" style-active="transform:translate(3px,3px);box-shadow:0 0 0 #17140F">
+            <span style="min-width:42px;height:42px;flex:none;border:2.5px solid #17140F;border-radius:13px;display:flex;align-items:center;justify-content:center;font:700 16px/1 'Space Grotesk',monospace;{{ p.chipDyn }}">{{ p.count }}</span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:15.5px;font-weight:800;letter-spacing:-.03em;color:#17140F">{{ p.n }}</span>
+              <span style="display:block;margin-top:3px;font-size:12px;color:#6B6255">{{ p.c }}</span>
+            </span>
+            <span style="font:700 16px/1 'Space Grotesk',monospace">→</span>
+          </button>
+        </sc-for>
+        <button onClick="{{ openCamera }}" style="display:flex;align-items:center;gap:12px;text-align:left;background:#FFF3D6;border:2.5px dashed #17140F;border-radius:18px;padding:13px 12px;transition:transform .16s" style-hover="transform:translate(-2px,-2px)">
+          <span style="width:32px;height:32px;flex:none;border:2.5px solid #17140F;border-radius:10px;background:#FFF;display:flex;align-items:center;justify-content:center;font:700 12px/1 'Space Grotesk',monospace">◎</span>
+          <span style="flex:1;font-size:14px;font-weight:700;letter-spacing:-.02em">가방 사진으로 새로 만들기</span>
+          <span style="font:700 9.5px/1 'Space Grotesk',monospace;letter-spacing:.12em;border:2px solid #17140F;border-radius:99px;padding:3px 6px;background:#C6F24A">DEMO</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- 하단 독 -->
+  <sc-if value="{{ showDock }}" hint-placeholder-val="{{ false }}">
+  <div style="flex:none;height:86px;position:relative;z-index:18;border-top:3px solid #17140F;background:#FFF3D6;display:flex;align-items:center;gap:12px;padding:0 20px">
+    <button onClick="{{ saveNow }}" disabled="{{ saveOff }}" aria-label="여기까지 저장" style="flex:1;height:54px;border:2.5px solid #17140F;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:14px;font-weight:800;letter-spacing:-.02em;transition:transform .14s,box-shadow .14s;{{ saveDyn }}" style-active="transform:translate(3px,3px);box-shadow:0 0 0 #17140F">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+        <path d="M5.5 4.5h9.6l4.4 4.4v9.6a1.5 1.5 0 0 1-1.5 1.5H5.5A1.5 1.5 0 0 1 4 18.5v-12.5A1.5 1.5 0 0 1 5.5 4.5z"></path>
+        <path d="M8.4 4.5v5h6.2v-5"></path>
+        <path d="M8.4 19.5v-5.4h7.2v5.4"></path>
+      </svg>
+      저장
+    </button>
+
+    <button onClick="{{ toggleSheet }}" aria-label="최근 체크리스트" style="width:66px;height:66px;flex:none;border:3px solid #17140F;border-radius:22px;display:flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 #17140F;transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .18s,background .2s;{{ dockCenterDyn }}" style-active="transform:translate(4px,4px) scale(.96);box-shadow:0 0 0 #17140F">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1);{{ centerIconDyn }}">
+        <path d="M8.4 6.6h9.1a2 2 0 0 1 2 2v10.4a2 2 0 0 1-2 2H8.4a2 2 0 0 1-2-2V8.6a2 2 0 0 1 2-2z"></path>
+        <path d="M4.4 16.6a2 2 0 0 1-1.1-1.8V5.4a2 2 0 0 1 2-2h8.5a2 2 0 0 1 1.8 1.1"></path>
+        <path d="M9.8 11.4h6.3M9.8 14.6h6.3M9.8 17.6h3.6"></path>
+      </svg>
+    </button>
+
+    <button onClick="{{ checkAll }}" disabled="{{ saveOff }}" aria-label="전부 체크" style="flex:1;height:54px;border:2.5px solid #17140F;border-radius:18px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:14px;font-weight:800;letter-spacing:-.02em;transition:transform .14s,box-shadow .14s;{{ allDyn }}" style-active="transform:translate(3px,3px);box-shadow:0 0 0 #17140F">
+      <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+        <path d="M3 12.8l3.4 3.4L13 9"></path>
+        <path d="M10.6 15.4l1.6 1.6L21 8.2"></path>
+      </svg>
+      전부
+    </button>
+  </div>
+  </sc-if>
+
+  <input type="file" accept="image/*" ref="{{ fileRef }}" onChange="{{ onFile }}" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></input>
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:446,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  fileRef = React.createRef();
+  seq = 1;
+  PACKS = {
+    minimal: { n: "미니멀", c: "기내 수하물 하나", d: "꼭 필요한 것만. 세면도구는 현지 조달.", color: "#C6F24A",
+      items: ["여권·신분증","카드","휴대폰 충전기","보조배터리","상의","하의","속옷·양말","칫솔·치약"] },
+    basic: { n: "기본", c: "캐리어 하나", d: "대부분의 여행에 무난한 표준 구성.", color: "#FFC2D1",
+      items: ["여권·신분증","항공권","카드","현금","휴대폰 충전기","보조배터리","멀티 어댑터","이어폰","상의","하의","잠옷","속옷·양말","겉옷","칫솔·치약","클렌징","기초 화장품","선크림","상비약","우산"] },
+    maximal: { n: "맥시멀", c: "빠짐없이", d: "챙길 수 있는 건 다. 나중에 빼는 쪽이 편한 분께.", color: "#9EC9FF",
+      items: ["여권·신분증","여권 사본","항공권","숙소 바우처","카드","현금","여행자 보험","휴대폰 충전기","보조배터리","멀티 어댑터","이어폰","카메라","이심·유심","상의","하의","잠옷","속옷·양말","겉옷","수영복","모자","슬리퍼","칫솔·치약","클렌징","기초 화장품","선크림","샴푸 소분","면도기","수건","소화제","진통제","밴드","멀미약","비닐봉지","에코백"] }
+  };
+  RECOGNIZED = ["캐리어","여권","충전기","보조배터리","이어폰","티셔츠","청바지","양말","세면 파우치","선글라스","운동화","우산","카메라"];
+  CONF = ["#FF5A1F","#C6F24A","#2F4BFF","#FFC2D1","#FFF","#FFB020","#9EC9FF","#C6F24A","#FF5A1F","#FFC2D1","#2F4BFF","#C6F24A"];
+
+  state = { screen: "ob", list: null, hist: [], sheet: false, draft: "", editing: null, editDraft: "",
+    renaming: false, nameDraft: "", bump: null, toast: null, undo: null,
+    scan: false, scanning: false, photo: null, sel: [] };
+
+  uid(p) { return p + (this.seq++) + "_" + ((Math.random() * 1e6) | 0); }
+  today() { const d = new Date(); return `${d.getMonth() + 1}월 ${d.getDate()}일 짐`; }
+  stamp() { return new Date().toISOString().slice(2, 10).replace(/-/g, "."); }
+  stat() { const it = this.state.list ? this.state.list.items : []; return { n: it.length, p: it.filter(i => i.done).length }; }
+
+  toast(msg, undo) {
+    clearTimeout(this._tt);
+    this.setState({ toast: msg, undo: undo || null });
+    this._tt = setTimeout(() => this.setState({ toast: null, undo: null }), 5000);
+  }
+  hideToast() { clearTimeout(this._tt); this.setState({ toast: null, undo: null }); }
+
+  seed(items, note) {
+    const prev = this.state.list;
+    const list = { id: this.uid("L"), name: this.today(), created: this.stamp(),
+      items: items.map(l => ({ id: this.uid("i"), label: l, done: false })) };
+    this.setState({ list, screen: "list", sheet: false, draft: "", editing: null });
+    if (prev) this.toast(note || "목록을 바꿨어요", () => this.setState({ list: prev }));
+  }
+
+  toggle(id) {
+    const items = this.state.list.items.map(i => i.id === id ? { ...i, done: !i.done } : i);
+    this.setState({ list: { ...this.state.list, items }, bump: id });
+    clearTimeout(this._bt);
+    this._bt = setTimeout(() => this.setState({ bump: null }), 420);
+  }
+  remove(id) {
+    const items = [...this.state.list.items];
+    const i = items.findIndex(x => x.id === id);
+    if (i < 0) return;
+    const [gone] = items.splice(i, 1);
+    this.setState({ list: { ...this.state.list, items } });
+    this.toast(`'${gone.label}' 지웠어요`, () => {
+      const back = [...this.state.list.items];
+      back.splice(i, 0, gone);
+      this.setState({ list: { ...this.state.list, items: back } });
+    });
+  }
+  addItem() {
+    const v = this.state.draft.trim();
+    if (!v) return;
+    const items = [...this.state.list.items, { id: this.uid("i"), label: v, done: false }];
+    this.setState({ list: { ...this.state.list, items }, draft: "" });
+  }
+  commitEdit() {
+    const id = this.state.editing, v = this.state.editDraft.trim();
+    if (id && v) {
+      const items = this.state.list.items.map(i => i.id === id ? { ...i, label: v } : i);
+      this.setState({ list: { ...this.state.list, items } });
+    }
+    this.setState({ editing: null, editDraft: "" });
+  }
+  commitName() {
+    const v = this.state.nameDraft.trim();
+    if (v) this.setState({ list: { ...this.state.list, name: v } });
+    this.setState({ renaming: false });
+  }
+  restart(msg) {
+    const s = this.stat(), L = this.state.list;
+    const snap = { name: L.name, created: L.created, n: s.n, p: s.p, items: L.items.map(i => ({ label: i.label, done: i.done })) };
+    const list = { id: this.uid("L"), name: this.today(), created: this.stamp(),
+      items: L.items.map(i => ({ id: this.uid("i"), label: i.label, done: false })) };
+    this.setState({ hist: [snap, ...this.state.hist], list, fresh: true });
+    this.toast(msg || "보관함에 넣고 새로 시작했어요", () => {
+      this.setState({ hist: this.state.hist.slice(1),
+        list: { id: this.uid("L"), name: snap.name, created: snap.created,
+          items: snap.items.map(i => ({ id: this.uid("i"), label: i.label, done: i.done })) } });
+    });
+  }
+
+  onFile(e) {
+    const f = e.target.files && e.target.files[0];
+    this.setState({ scan: true, sheet: false, scanning: true, sel: [], photo: f ? URL.createObjectURL(f) : null });
+    setTimeout(() => this.setState({ scanning: false, sel: this.RECOGNIZED.slice(0, 9) }), 1500);
+  }
+
+  renderVals() {
+    const S = this.state, s = this.stat(), left = s.n - s.p;
+    const pct = s.n ? (s.p / s.n) * 100 : 0;
+    const done = s.n > 0 && left === 0;
+
+    const packs = Object.keys(this.PACKS).map(k => {
+      const p = this.PACKS[k];
+      return { n: p.n, c: p.c, d: p.d, count: p.items.length,
+        chipDyn: `background:${p.color};color:#17140F`,
+        start: () => this.seed(p.items, `'${p.n}' 목록으로 바꿨어요`) };
+    });
+
+    const items = (S.list ? S.list.items : []).map(it => ({
+      id: it.id, label: it.label, mark: it.done ? "✓" : "",
+      editing: S.editing === it.id, notEditing: S.editing !== it.id,
+      rowDyn: it.done
+        ? "background:#F1F7DE;box-shadow:1px 1px 0 #17140F;transform:translate(2px,2px)"
+        : (S.bump === it.id ? "background:#FFF;box-shadow:4px 4px 0 #17140F;animation:pop .34s cubic-bezier(.34,1.56,.64,1)"
+                            : "background:#FFF;box-shadow:4px 4px 0 #17140F"),
+      boxDyn: it.done ? "background:#C6F24A;color:#17140F" : "background:#FFF;color:#17140F",
+      labelDyn: it.done ? "color:#A79C8B;text-decoration:line-through" : "color:#17140F",
+      toggle: () => this.toggle(it.id),
+      edit: () => this.setState({ editing: it.id, editDraft: it.label }),
+      remove: () => this.remove(it.id)
+    }));
+
+    const hist = S.hist.map((h, idx) => ({
+      name: h.name, meta: `${h.created} · ${h.p}/${h.n}`,
+      preview: h.items.slice(0, 6).map(i => i.label).join(" · ") + (h.items.length > 6 ? " …" : ""),
+      anim: S.sheet ? `animation:cardup .34s cubic-bezier(.34,1.3,.64,1) ${0.04 + idx * 0.05}s both` : "",
+      restore: () => {
+        const keep = S.list.items.map(i => ({ label: i.label, done: i.done }));
+        this.setState({ sheet: false,
+          list: { ...S.list, items: h.items.map(i => ({ id: this.uid("i"), label: i.label, done: false })) } });
+        this.toast(`'${h.name}' 항목으로 되돌렸어요`, () => this.setState({
+          list: { ...this.state.list, items: keep.map(i => ({ id: this.uid("i"), label: i.label, done: i.done })) } }));
+      }
+    }));
+
+    const tokens = this.RECOGNIZED.map(l => {
+      const on = S.sel.indexOf(l) >= 0;
+      return { label: l, mark: on ? "✓" : "＋",
+        dyn: on ? "background:#17140F;color:#FFFBF3;box-shadow:2.5px 2.5px 0 #FF5A1F"
+                : "background:#FFF;color:#A79C8B;box-shadow:none",
+        toggle: () => this.setState({ sel: on ? S.sel.filter(x => x !== l) : [...S.sel, l] }) };
+    });
+
+    const confetti = done ? this.CONF.map((c, i) => ({
+      dyn: `background:${c};border-radius:${i % 3 ? "3px" : "99px"};animation:b${(i % 8) + 1} ${0.85 + (i % 4) * 0.12}s cubic-bezier(.2,.6,.3,1) ${i * 0.03}s both`
+    })) : [];
+
+    const canAct = s.n > 0 && !done && !S.sheet;
+    const off = "background:#EDE6D8;color:#A79C8B;box-shadow:none;cursor:default";
+
+    return {
+      isOb: S.screen === "ob", isList: S.screen === "list", notOb: S.screen !== "ob",
+      showDock: S.screen !== "ob",
+      packs, items, hist, tokens, confetti,
+      noHist: S.hist.length === 0,
+      histCount: S.hist.length ? `${S.hist.length} SAVED` : "",
+      sheetOpen: S.sheet,
+      sheetDyn: S.sheet ? "transform:translateY(0)" : "transform:translateY(100%)",
+      toggleSheet: () => this.setState({ sheet: !S.sheet }),
+      closeSheet: () => this.setState({ sheet: false }),
+      dockCenterDyn: S.sheet ? "background:#FF5A1F;color:#FFF" : "background:#17140F;color:#FFFBF3",
+      centerIconDyn: S.sheet ? "transform:rotate(-8deg) scale(.92)" : "",
+      listName: S.list ? S.list.name : "",
+      renaming: S.renaming, notRenaming: !S.renaming, nameDraft: S.nameDraft,
+      startRename: () => this.setState({ renaming: true, nameDraft: S.list.name }),
+      onNameInput: e => this.setState({ nameDraft: e.target.value }),
+      onNameKey: e => { if (e.key === "Enter") this.commitName(); if (e.key === "Escape") this.setState({ renaming: false }); },
+      commitName: () => this.commitName(),
+      leftCount: done ? s.n : left, leftLabel: done ? "개 전부 완료!" : "개 남았어요",
+      ratio: s.n ? `${s.p} / ${s.n}` : "0 / 0",
+      countDyn: S.bump ? "animation:tick .3s cubic-bezier(.34,1.56,.64,1)" : "",
+      barDyn: `width:${pct}%;background:${done ? "#C6F24A" : "#FF5A1F"}`,
+      allDone: done, doneNote: `${s.n}개 전부 체크.`,
+      draft: S.draft,
+      onDraft: e => this.setState({ draft: e.target.value }),
+      onDraftKey: e => { if (e.key === "Enter") this.addItem(); },
+      editDraft: S.editDraft,
+      onEditInput: e => this.setState({ editDraft: e.target.value }),
+      onEditKey: e => { if (e.key === "Enter") this.commitEdit(); if (e.key === "Escape") this.setState({ editing: null }); },
+      commitEdit: () => this.commitEdit(),
+      restart: () => this.restart(),
+      saveOff: !canAct,
+      saveDyn: canAct ? "background:#FF5A1F;color:#FFF;box-shadow:3px 3px 0 #17140F" : off,
+      allDyn: canAct ? "background:#C6F24A;color:#17140F;box-shadow:3px 3px 0 #17140F" : off,
+      saveNow: () => { if (canAct) this.restart(`${left}개 남긴 채로 저장했어요`); },
+      checkAll: () => {
+        if (!canAct) return;
+        const items = this.state.list.items.map(i => ({ ...i, done: true }));
+        this.setState({ list: { ...this.state.list, items }, bump: "all" });
+        clearTimeout(this._bt);
+        this._bt = setTimeout(() => this.setState({ bump: null }), 420);
+      },
+      fileRef: this.fileRef,
+      openCamera: () => { const el = this.fileRef.current; if (el) { el.value = ""; el.click(); } },
+      onFile: e => this.onFile(e),
+      scanOpen: S.scan, scanning: S.scanning, scanDone: S.scan && !S.scanning,
+      hasPhoto: !!S.photo, photoDyn: S.photo ? `background-image:url(${S.photo})` : "",
+      selCount: S.sel.length, scanCount: S.scanning ? "" : `${S.sel.length} SELECTED`,
+      scanN: S.sel.length ? `${S.sel.length}개` : "",
+      scanCtaOff: !S.sel.length,
+      ctaDyn: S.sel.length ? "background:#17140F;color:#FFFBF3;box-shadow:4px 4px 0 #FF5A1F" : off,
+      closeScan: () => this.setState({ scan: false, scanning: false, photo: null }),
+      acceptScan: () => { if (!S.sel.length) return; this.setState({ scan: false }); this.seed([...S.sel], "사진에서 만든 목록으로 바꿨어요"); },
+      hasToast: !!S.toast, toastMsg: S.toast || "", canUndo: !!S.undo,
+      doUndo: () => { const u = S.undo; this.hideToast(); if (u) u(); }
+    };
+  }
+}
+
+</script>
+</body>
+</html>

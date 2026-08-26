@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#FFE0AE;-webkit-font-smoothing:antialiased;font-family:Pretendard,'Pretendard Variable',-apple-system,sans-serif}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:#FF5A1F}a:hover{color:#17140F}
+</style>
+</helmet>
+<div style="min-height:100vh;padding:40px 34px 60px;display:flex;flex-direction:column;gap:26px">
+  <div>
+    <div style="display:inline-flex;align-items:center;gap:7px;background:#FF5A1F;color:#FFF;border:2.5px solid #17140F;border-radius:99px;padding:6px 13px;box-shadow:3px 3px 0 #17140F;font:700 11.5px/1 'Space Grotesk',monospace;letter-spacing:.1em">NAV ICON 시안</div>
+    <div style="margin-top:14px;font-size:27px;font-weight:800;letter-spacing:-.04em;color:#17140F">탭 아이콘 네 가지</div>
+    <div style="margin-top:8px;font-size:13.5px;line-height:1.6;color:#6B6255">탭을 눌러보면 선택 상태로 바뀝니다. 위는 확대본, 아래 탭바가 20px 실제 크기입니다.</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:22px">
+
+    <!-- 01 -->
+    <div style="width:392px;background:#FFFBF3;border:3px solid #17140F;border-radius:26px;box-shadow:7px 8px 0 #17140F;overflow:hidden;display:flex;flex-direction:column">
+      <div style="padding:16px 20px 14px;flex:1">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <span style="font:700 13px/1 'Space Grotesk',monospace;color:#FF5A1F">01</span>
+          <span style="font-size:17px;font-weight:800;letter-spacing:-.03em;color:#17140F">클립보드 + 겹친 카드</span>
+        </div>
+        <div style="margin-top:6px;font-size:12.5px;line-height:1.5;color:#6B6255">집게 달린 수첩에 체크. 보관함은 같은 수첩이 두 장 겹친 형태로, 현재 적용본보다 겹침이 또렷합니다.</div>
+        <div style="margin-top:14px;display:flex;gap:16px;align-items:center;color:#17140F">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3.5H7a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5.5a2 2 0 0 0-2-2h-2"></path>
+            <rect x="9" y="2" width="6" height="3.6" rx="1.3"></rect>
+            <path d="M8.6 13.2l2.2 2.2 4.6-4.6"></path>
+          </svg>
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.4 6.6h9.1a2 2 0 0 1 2 2v10.4a2 2 0 0 1-2 2H8.4a2 2 0 0 1-2-2V8.6a2 2 0 0 1 2-2z"></path>
+            <path d="M4.4 16.6a2 2 0 0 1-1.1-1.8V5.4a2 2 0 0 1 2-2h8.5a2 2 0 0 1 1.8 1.1"></path>
+            <path d="M9.8 11.4h6.3M9.8 14.6h6.3M9.8 17.6h3.6"></path>
+          </svg>
+        </div>
+      </div>
+      <div style="height:78px;flex:none;border-top:3px solid #17140F;background:#FFF3D6;display:flex;align-items:center;gap:10px;padding:0 18px">
+        <button onClick="{{ pickA1 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ a1 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M9 3.5H7a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5.5a2 2 0 0 0-2-2h-2"></path>
+            <rect x="9" y="2" width="6" height="3.6" rx="1.3"></rect>
+            <path d="M8.6 13.2l2.2 2.2 4.6-4.6"></path>
+          </svg>체크리스트</button>
+        <button onClick="{{ pickA2 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ a2 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M8.4 6.6h9.1a2 2 0 0 1 2 2v10.4a2 2 0 0 1-2 2H8.4a2 2 0 0 1-2-2V8.6a2 2 0 0 1 2-2z"></path>
+            <path d="M4.4 16.6a2 2 0 0 1-1.1-1.8V5.4a2 2 0 0 1 2-2h8.5a2 2 0 0 1 1.8 1.1"></path>
+            <path d="M9.8 11.4h6.3M9.8 14.6h6.3M9.8 17.6h3.6"></path>
+          </svg>보관함</button>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div style="width:392px;background:#FFFBF3;border:3px solid #17140F;border-radius:26px;box-shadow:7px 8px 0 #17140F;overflow:hidden;display:flex;flex-direction:column">
+      <div style="padding:16px 20px 14px;flex:1">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <span style="font:700 13px/1 'Space Grotesk',monospace;color:#FF5A1F">02</span>
+          <span style="font-size:17px;font-weight:800;letter-spacing:-.03em;color:#17140F">책갈피 + 겹친 책갈피</span>
+        </div>
+        <div style="margin-top:6px;font-size:12.5px;line-height:1.5;color:#6B6255">지금 보는 페이지를 표시한 북마크. 보관함은 같은 북마크가 부채처럼 겹쳐 쌓인 모습.</div>
+        <div style="margin-top:14px;display:flex;gap:16px;align-items:center;color:#17140F">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 4.4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16.2l-6-4.2-6 4.2z"></path>
+            <path d="M9.2 9.4l2.1 2.1 4-4.2"></path>
+          </svg>
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.8 8.2a1.8 1.8 0 0 1 1.8-1.8h6.6a1.8 1.8 0 0 1 1.8 1.8v13l-5.1-3.6-5.1 3.6z"></path>
+            <path d="M5.6 16.4V5.2a1.8 1.8 0 0 1 1.8-1.8h6.9"></path>
+          </svg>
+        </div>
+      </div>
+      <div style="height:78px;flex:none;border-top:3px solid #17140F;background:#FFF3D6;display:flex;align-items:center;gap:10px;padding:0 18px">
+        <button onClick="{{ pickB1 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ b1 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M6 4.4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16.2l-6-4.2-6 4.2z"></path>
+            <path d="M9.2 9.4l2.1 2.1 4-4.2"></path>
+          </svg>체크리스트</button>
+        <button onClick="{{ pickB2 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ b2 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M8.8 8.2a1.8 1.8 0 0 1 1.8-1.8h6.6a1.8 1.8 0 0 1 1.8 1.8v13l-5.1-3.6-5.1 3.6z"></path>
+            <path d="M5.6 16.4V5.2a1.8 1.8 0 0 1 1.8-1.8h6.9"></path>
+          </svg>보관함</button>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div style="width:392px;background:#FFFBF3;border:3px solid #17140F;border-radius:26px;box-shadow:7px 8px 0 #17140F;overflow:hidden;display:flex;flex-direction:column">
+      <div style="padding:16px 20px 14px;flex:1">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <span style="font:700 13px/1 'Space Grotesk',monospace;color:#FF5A1F">03</span>
+          <span style="font-size:17px;font-weight:800;letter-spacing:-.03em;color:#17140F">스프링 수첩</span>
+        </div>
+        <div style="margin-top:6px;font-size:12.5px;line-height:1.5;color:#6B6255">링 노트를 펼쳐 체크하는 모양. 보관함은 같은 노트가 두 권 겹쳐 꽂힌 모습.</div>
+        <div style="margin-top:14px;display:flex;gap:16px;align-items:center;color:#17140F">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7.6 3.6h9.4a1.6 1.6 0 0 1 1.6 1.6v13.6a1.6 1.6 0 0 1-1.6 1.6H7.6z"></path>
+            <path d="M7.6 3.6v16.8"></path>
+            <path d="M5.4 6.6h4.4M5.4 10.4h4.4M5.4 14.2h4.4M5.4 18h4.4"></path>
+            <path d="M12.2 12.6l1.8 1.8 3.2-3.4"></path>
+          </svg>
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.4 7.4h7.6a1.6 1.6 0 0 1 1.6 1.6v10.4a1.6 1.6 0 0 1-1.6 1.6h-7.6z"></path>
+            <path d="M10.4 7.4v13.6"></path>
+            <path d="M8.6 10h3.6M8.6 13.4h3.6M8.6 16.8h3.6"></path>
+            <path d="M7 17.4V5.6a1.6 1.6 0 0 1 1.6-1.6h7"></path>
+            <path d="M5.4 6.4h3.2M5.4 9.6h3.2"></path>
+          </svg>
+        </div>
+      </div>
+      <div style="height:78px;flex:none;border-top:3px solid #17140F;background:#FFF3D6;display:flex;align-items:center;gap:10px;padding:0 18px">
+        <button onClick="{{ pickC1 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ c1 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M7.6 3.6h9.4a1.6 1.6 0 0 1 1.6 1.6v13.6a1.6 1.6 0 0 1-1.6 1.6H7.6z"></path>
+            <path d="M7.6 3.6v16.8"></path>
+            <path d="M5.4 6.6h4.4M5.4 10.4h4.4M5.4 14.2h4.4M5.4 18h4.4"></path>
+            <path d="M12.2 12.6l1.8 1.8 3.2-3.4"></path>
+          </svg>체크리스트</button>
+        <button onClick="{{ pickC2 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ c2 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M10.4 7.4h7.6a1.6 1.6 0 0 1 1.6 1.6v10.4a1.6 1.6 0 0 1-1.6 1.6h-7.6z"></path>
+            <path d="M10.4 7.4v13.6"></path>
+            <path d="M8.6 10h3.6M8.6 13.4h3.6M8.6 16.8h3.6"></path>
+            <path d="M7 17.4V5.6a1.6 1.6 0 0 1 1.6-1.6h7"></path>
+            <path d="M5.4 6.4h3.2M5.4 9.6h3.2"></path>
+          </svg>보관함</button>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div style="width:392px;background:#FFFBF3;border:3px solid #17140F;border-radius:26px;box-shadow:7px 8px 0 #17140F;overflow:hidden;display:flex;flex-direction:column">
+      <div style="padding:16px 20px 14px;flex:1">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <span style="font:700 13px/1 'Space Grotesk',monospace;color:#FF5A1F">04</span>
+          <span style="font-size:17px;font-weight:800;letter-spacing:-.03em;color:#17140F">여행 가방</span>
+        </div>
+        <div style="margin-top:6px;font-size:12.5px;line-height:1.5;color:#6B6255">손잡이 달린 가방에 체크. 보관함은 가방 두 개가 나란히 겹쳐 세워진 모습.</div>
+        <div style="margin-top:14px;display:flex;gap:16px;align-items:center;color:#17140F">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5.6 6.8h12.8a1.8 1.8 0 0 1 1.8 1.8v10a1.8 1.8 0 0 1-1.8 1.8H5.6a1.8 1.8 0 0 1-1.8-1.8v-10a1.8 1.8 0 0 1 1.8-1.8z"></path>
+            <path d="M9 6.8V4.6a1.4 1.4 0 0 1 1.4-1.4h3.2A1.4 1.4 0 0 1 15 4.6v2.2"></path>
+            <path d="M9.2 13.4l2.1 2.1 4-4.2"></path>
+          </svg>
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.6 9.6h8a1.8 1.8 0 0 1 1.8 1.8v7.4a1.8 1.8 0 0 1-1.8 1.8h-8a1.8 1.8 0 0 1-1.8-1.8v-7.4a1.8 1.8 0 0 1 1.8-1.8z"></path>
+            <path d="M12.8 9.6V8.2a1.2 1.2 0 0 1 1.2-1.2h1.2a1.2 1.2 0 0 1 1.2 1.2v1.4"></path>
+            <path d="M6.6 18.4H5.2a1.8 1.8 0 0 1-1.8-1.8V8a1.8 1.8 0 0 1 1.8-1.8h8"></path>
+            <path d="M7.6 6.2V4.9a1.2 1.2 0 0 1 1.2-1.2h1.6"></path>
+          </svg>
+        </div>
+      </div>
+      <div style="height:78px;flex:none;border-top:3px solid #17140F;background:#FFF3D6;display:flex;align-items:center;gap:10px;padding:0 18px">
+        <button onClick="{{ pickD1 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ d1 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M5.6 6.8h12.8a1.8 1.8 0 0 1 1.8 1.8v10a1.8 1.8 0 0 1-1.8 1.8H5.6a1.8 1.8 0 0 1-1.8-1.8v-10a1.8 1.8 0 0 1 1.8-1.8z"></path>
+            <path d="M9 6.8V4.6a1.4 1.4 0 0 1 1.4-1.4h3.2A1.4 1.4 0 0 1 15 4.6v2.2"></path>
+            <path d="M9.2 13.4l2.1 2.1 4-4.2"></path>
+          </svg>체크리스트</button>
+        <button onClick="{{ pickD2 }}" style="flex:1;height:50px;border:2.5px solid #17140F;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:13.5px;font-weight:800;letter-spacing:-.02em;transition:transform .16s,box-shadow .16s;{{ d2 }}">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" style="flex:none">
+            <path d="M10.6 9.6h8a1.8 1.8 0 0 1 1.8 1.8v7.4a1.8 1.8 0 0 1-1.8 1.8h-8a1.8 1.8 0 0 1-1.8-1.8v-7.4a1.8 1.8 0 0 1 1.8-1.8z"></path>
+            <path d="M12.8 9.6V8.2a1.2 1.2 0 0 1 1.2-1.2h1.2a1.2 1.2 0 0 1 1.2 1.2v1.4"></path>
+            <path d="M6.6 18.4H5.2a1.8 1.8 0 0 1-1.8-1.8V8a1.8 1.8 0 0 1 1.8-1.8h8"></path>
+            <path d="M7.6 6.2V4.9a1.2 1.2 0 0 1 1.2-1.2h1.6"></path>
+          </svg>보관함</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { sel: { a: 1, b: 1, c: 1, d: 1 } };
+  pick(k, v) { this.setState({ sel: { ...this.state.sel, [k]: v } }); }
+  renderVals() {
+    const on = "background:#17140F;color:#FFFBF3;box-shadow:3px 3px 0 #FF5A1F";
+    const off = "background:#FFF;color:#17140F;box-shadow:none";
+    const S = this.state.sel;
+    const out = {};
+    ["a", "b", "c", "d"].forEach(k => {
+      out[k + "1"] = S[k] === 1 ? on : off;
+      out[k + "2"] = S[k] === 2 ? on : off;
+      out["pick" + k.toUpperCase() + "1"] = () => this.pick(k, 1);
+      out["pick" + k.toUpperCase() + "2"] = () => this.pick(k, 2);
+    });
+    return out;
+  }
+}
+
+</script>
+</body>
+</html>
