@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "짐 — Pack It",
+    "slug": "packit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#FFFBF3",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.packit.app"
+    },
+    "android": {
+      "package": "com.packit.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#FFE0AE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "가방 사진에서 챙길 물건을 찾기 위해 사진 접근이 필요해요."
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}
