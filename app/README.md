@@ -22,11 +22,15 @@ Three routes, in order of least setup. All produce the same app.
 
 ### 1. GitHub Actions — no accounts, no local tooling
 
-Push the repo to GitHub. `.github/workflows/android-apk.yml` builds on every push
-to `app/**` and attaches the APK to the run; download it from the run summary and
-sideload it (Settings → allow install from this source).
+`.github/workflows/android-apk.yml` builds on every push to `app/**` and attaches
+the APK to the run; download it from the run summary and sideload it (allow
+"install unknown apps" for whatever app you open it with). You can also trigger it
+by hand from the Actions tab (**Run workflow**).
 
-You can also trigger it by hand from the Actions tab (**Run workflow**).
+A run takes about 11 minutes, ~10 of it Gradle, and produces a ~26MB APK. Roughly
+10MB of that is the four bundled Pretendard weights; `tools/build-web-single-file.mjs`
+shows how to subset them (full Hangul block, woff2) if the size ever matters
+enough to do the same for the native build.
 
 ### 2. EAS Build — one command, needs a free Expo account
 
