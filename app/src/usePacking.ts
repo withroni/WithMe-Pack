@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as Haptics from 'expo-haptics';
 import { PACKS, RECOGNIZED } from './data/packs';
+import { recognizeItems, scanConfigured } from './scan';
 import { load, save } from './storage';
 import type { Item, List, PackKey, Snapshot } from './types';
 
@@ -50,6 +51,8 @@ export function usePacking() {
   const [scan, setScan] = useState(false);
   const [scanning, setScanning] = useState(false);
   const [photo, setPhoto] = useState<string | null>(null);
+  /** What the scan turned up — from the backend, or the canned demo list. */
+  const [candidates, setCandidates] = useState<string[]>([]);
   const [sel, setSel] = useState<string[]>([]);
 
   // Mirrors of list/hist kept in sync synchronously, so an action can read the
@@ -70,6 +73,8 @@ export function usePacking() {
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const bumpTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scanTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** Bumped per scan so a late network result for an abandoned scan is dropped. */
+  const scanRun = useRef(0);
 
   // ---- hydrate ------------------------------------------------------------
   useEffect(() => {
@@ -288,19 +293,35 @@ export function usePacking() {
 
   // ---- photo scan ---------------------------------------------------------
   const beginScan = useCallback((uri: string | null) => {
+    const run = ++scanRun.current;
     setScan(true);
     setSheet(false);
     setScanning(true);
     setSel([]);
+    setCandidates([]);
     setPhoto(uri);
     if (scanTimer.current) clearTimeout(scanTimer.current);
-    scanTimer.current = setTimeout(() => {
+
+    // Ignore a slow response the user already walked away from.
+    const finish = (found: string[], selected: string[]) => {
+      if (scanRun.current !== run) return;
+      setCandidates(found);
+      setSel(selected);
       setScanning(false);
-      setSel(RECOGNIZED.slice(0, 9));
-    }, FAKE_SCAN_MS);
+    };
+    const demo = () => finish(RECOGNIZED, RECOGNIZED.slice(0, 9));
+
+    if (uri && scanConfigured) {
+      recognizeItems(uri).then((items) => (items ? finish(items, items) : demo()), demo);
+      return;
+    }
+
+    // No photo, or no backend configured: keep the prototype's simulated scan.
+    scanTimer.current = setTimeout(demo, FAKE_SCAN_MS);
   }, []);
 
   const closeScan = useCallback(() => {
+    scanRun.current++;
     if (scanTimer.current) clearTimeout(scanTimer.current);
     setScan(false);
     setScanning(false);
@@ -331,14 +352,14 @@ export function usePacking() {
       bump,
       toastMsg, undo, doUndo, hideToast,
       seed, startPack, toggle, remove, restart, saveNow, checkAll, restoreSnapshot,
-      scan, scanning, photo, sel, beginScan, closeScan, toggleToken, acceptScan,
+      scan, scanning, photo, candidates, sel, beginScan, closeScan, toggleToken, acceptScan,
     }),
     [
       ready, screen, list, hist, items, n, p, left, pct, allDone, canAct, sheet, draft,
       editing, editDraft, renaming, nameDraft, bump, toastMsg, undo, doUndo, hideToast,
       addItem, commitEdit, startEdit, cancelEdit, startRename, commitName, cancelRename,
       seed, startPack, toggle, remove, restart, saveNow, checkAll, restoreSnapshot,
-      scan, scanning, photo, sel, beginScan, closeScan, toggleToken, acceptScan,
+      scan, scanning, photo, candidates, sel, beginScan, closeScan, toggleToken, acceptScan,
     ],
   );
 }

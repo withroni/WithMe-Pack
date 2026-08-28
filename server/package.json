@@ -1,0 +1,17 @@
+{
+  "name": "withme-pack-server",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.122.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@vercel/node": "^9.0.1",
+    "typescript": "^7.0.2"
+  }
+}

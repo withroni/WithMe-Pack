@@ -63,6 +63,13 @@ jobs:
         # dropping them roughly halves the build.
         run: ./gradlew assembleRelease --no-daemon -PreactNativeArchitectures=arm64-v8a,armeabi-v7a
         working-directory: app/android
+        env:
+          # Optional. Set these repository secrets to build an APK with photo
+          # recognition wired up; leave them unset and the app falls back to its
+          # built-in demo list. They are inlined into the bundle, so a build
+          # carrying them is a test build — see server/README.md.
+          EXPO_PUBLIC_SCAN_URL: ${{ secrets.EXPO_PUBLIC_SCAN_URL }}
+          EXPO_PUBLIC_SCAN_TOKEN: ${{ secrets.EXPO_PUBLIC_SCAN_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         with:

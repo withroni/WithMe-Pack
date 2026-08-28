@@ -131,9 +131,24 @@ Three, all called out so they are easy to revert:
 Also added, since a phone affords it: drag-to-dismiss on the sheet, and light
 haptics on check / complete.
 
-The photo scan is still a demo — it returns a canned list after 1.5s and does no
-recognition, exactly like the prototype. `RECOGNIZED` in `src/data/packs.ts` is
-where a real model would plug in.
+## Photo recognition
+
+Off by default. Copy `.env.example` to `.env` and fill in the two values to point
+the app at the scan proxy in `../server`:
+
+```
+EXPO_PUBLIC_SCAN_URL=https://your-deployment.vercel.app/api/scan
+EXPO_PUBLIC_SCAN_TOKEN=<the APP_TOKEN you set on Vercel>
+```
+
+With them unset — including in CI, unless the matching repository secrets exist —
+`src/scan.ts` reports itself unconfigured and the flow falls back to the
+prototype's canned list after 1.5s. It also falls back on any network error,
+timeout, or malformed response, so a scan can never block the flow.
+
+Photos are downscaled to a 1000px long edge before upload, which is the main
+lever on what a scan costs. `EXPO_PUBLIC_*` values are inlined into the bundle
+and readable from a shipped binary — test builds only, see `../server/README.md`.
 
 ## Layout
 

@@ -11,7 +11,6 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FadeIn } from '../components/FadeIn';
 import { StickerButton } from '../components/Sticker';
-import { RECOGNIZED } from '../data/packs';
 import { BORDER, C, F, ls } from '../theme';
 
 const FRAME_H = 150;
@@ -102,6 +101,7 @@ function Token({ label, on, onPress }: { label: string; on: boolean; onPress: ()
 export function Scan({
   scanning,
   photo,
+  candidates,
   sel,
   onBack,
   onToggleToken,
@@ -109,6 +109,7 @@ export function Scan({
 }: {
   scanning: boolean;
   photo: string | null;
+  candidates: string[];
   sel: string[];
   onBack: () => void;
   onToggleToken: (label: string) => void;
@@ -204,7 +205,7 @@ export function Scan({
             contentContainerStyle={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, paddingBottom: 6 }}
             showsVerticalScrollIndicator={false}
           >
-            {RECOGNIZED.map((label) => (
+            {candidates.map((label) => (
               <Token key={label} label={label} on={sel.includes(label)} onPress={() => onToggleToken(label)} />
             ))}
           </ScrollView>

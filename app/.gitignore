@@ -41,3 +41,6 @@ yarn-error.*
 /android
 
 dist-single/
+
+# local secrets
+.env

@@ -99,6 +99,7 @@ function Root() {
         <Scan
           scanning={p.scanning}
           photo={p.photo}
+          candidates={p.candidates}
           sel={p.sel}
           onBack={p.closeScan}
           onToggleToken={p.toggleToken}
