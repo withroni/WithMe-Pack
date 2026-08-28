@@ -16,28 +16,67 @@ The native modules (Reanimated, Gesture Handler, SVG, AsyncStorage, Image Picker
 need a dev build or Expo Go; `babel-preset-expo` wires up the Reanimated/Worklets
 babel plugin automatically, so there is no `babel.config.js`.
 
-## Put it on a phone
+## Getting an Android APK
 
-**On your own machine**, the usual route — a QR code straight to the device:
+Three routes, in order of least setup. All produce the same app.
+
+### 1. GitHub Actions — no accounts, no local tooling
+
+Push the repo to GitHub. `.github/workflows/android-apk.yml` builds on every push
+to `app/**` and attaches the APK to the run; download it from the run summary and
+sideload it (Settings → allow install from this source).
+
+You can also trigger it by hand from the Actions tab (**Run workflow**).
+
+### 2. EAS Build — one command, needs a free Expo account
 
 ```bash
-npx expo start          # scan with Expo Go, or --tunnel if you're on another network
+npx eas login
+npx eas build --profile preview --platform android
 ```
 
-For a real installable build, `npx eas build --profile preview --platform ios`
-(or `android`) — needs an Expo account.
+`preview` is configured to emit an APK rather than an AAB, so the download link
+installs directly. This is also the route for iOS later — it builds without a Mac.
 
-**Without a device build**, there is a single-file web bundle: one `.html` with
-the JS and subset fonts inlined, no external requests, so it can go on any static
-host and be opened on a phone.
+### 3. Locally — needs Android Studio / the Android SDK
+
+```bash
+npx expo run:android --variant release
+```
+
+### Signing
+
+Expo's template signs `release` with its own bundled debug keystore, which is why
+all three routes give you something installable with no key setup. That is fine
+for sideloading and internal testing, and updates install over each other.
+
+**Before any Play Store upload**, generate a real keystore and point the `release`
+signing config at it — a debug-signed build is rejected. EAS handles this for you
+(`eas build --profile production`, which emits an AAB); a manual key follows
+[the React Native signing guide](https://reactnative.dev/docs/signed-apk-android).
+
+`app.json` currently declares `com.packit.app` as the package name. Change it to
+something you own before publishing — it is permanent once a listing exists.
+
+## Running it without a build
+
+There is also a single-file web bundle: one `.html` with the JS and subset fonts
+inlined, no external requests, so it can go on any static host and be opened on a
+phone.
 
 ```bash
 pip install fonttools brotli      # for pyftsubset
 node tools/build-web-single-file.mjs
 ```
 
-It's the same app, but the web build: no haptics, and scroll/gesture feel is the
-browser's rather than the platform's.
+Same app, but the web build: no haptics, and scroll/gesture feel is the browser's
+rather than the platform's.
+
+## Icons
+
+`assets/` is generated, not hand-drawn — `python3 tools/make-icons.py` redraws the
+launcher, adaptive, monochrome, splash and favicon art from the design palette.
+The mark is the app's own checkbox, the one element that survives 48dp.
 
 ## What the screens are
 
