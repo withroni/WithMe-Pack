@@ -16,6 +16,29 @@ The native modules (Reanimated, Gesture Handler, SVG, AsyncStorage, Image Picker
 need a dev build or Expo Go; `babel-preset-expo` wires up the Reanimated/Worklets
 babel plugin automatically, so there is no `babel.config.js`.
 
+## Put it on a phone
+
+**On your own machine**, the usual route — a QR code straight to the device:
+
+```bash
+npx expo start          # scan with Expo Go, or --tunnel if you're on another network
+```
+
+For a real installable build, `npx eas build --profile preview --platform ios`
+(or `android`) — needs an Expo account.
+
+**Without a device build**, there is a single-file web bundle: one `.html` with
+the JS and subset fonts inlined, no external requests, so it can go on any static
+host and be opened on a phone.
+
+```bash
+pip install fonttools brotli      # for pyftsubset
+node tools/build-web-single-file.mjs
+```
+
+It's the same app, but the web build: no haptics, and scroll/gesture feel is the
+browser's rather than the platform's.
+
 ## What the screens are
 
 One screen, not a tab bar — that is the whole point of this variant.
