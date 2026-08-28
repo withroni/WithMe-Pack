@@ -16,13 +16,15 @@ const label = {
 };
 
 export function Dock({
-  canAct,
+  canSave,
+  canCheckAll,
   sheetOpen,
   onSave,
   onToggleSheet,
   onCheckAll,
 }: {
-  canAct: boolean;
+  canSave: boolean;
+  canCheckAll: boolean;
   sheetOpen: boolean;
   onSave: () => void;
   onToggleSheet: () => void;
@@ -71,14 +73,14 @@ export function Dock({
       <StickerButton
         radius={18}
         shadow={3}
-        disabled={!canAct}
+        disabled={!canSave}
         onPress={onSave}
         accessibilityLabel="여기까지 저장"
         wrapStyle={{ flex: 1 }}
-        style={{ ...side, backgroundColor: canAct ? C.orange : C.offBg }}
+        style={{ ...side, backgroundColor: canSave ? C.orange : C.offBg }}
       >
-        <SaveIcon size={21} color={canAct ? C.white : C.faint} />
-        <Text style={[label, { color: canAct ? C.white : C.faint }]}>저장</Text>
+        <SaveIcon size={21} color={canSave ? C.white : C.faint} />
+        <Text style={[label, { color: canSave ? C.white : C.faint }]}>저장</Text>
       </StickerButton>
 
       <StickerButton
@@ -107,14 +109,14 @@ export function Dock({
       <StickerButton
         radius={18}
         shadow={3}
-        disabled={!canAct}
+        disabled={!canCheckAll}
         onPress={onCheckAll}
         accessibilityLabel="전부 체크"
         wrapStyle={{ flex: 1 }}
-        style={{ ...side, backgroundColor: canAct ? C.lime : C.offBg }}
+        style={{ ...side, backgroundColor: canCheckAll ? C.lime : C.offBg }}
       >
-        <CheckAllIcon size={23} color={canAct ? C.ink : C.faint} />
-        <Text style={[label, { color: canAct ? C.ink : C.faint }]}>전부</Text>
+        <CheckAllIcon size={23} color={canCheckAll ? C.ink : C.faint} />
+        <Text style={[label, { color: canCheckAll ? C.ink : C.faint }]}>전부</Text>
       </StickerButton>
     </View>
   );

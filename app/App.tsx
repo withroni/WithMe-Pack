@@ -74,7 +74,8 @@ function Root() {
 
       {!onboarding && (
         <Dock
-          canAct={p.canAct}
+          canSave={p.canSave}
+          canCheckAll={p.canCheckAll}
           sheetOpen={p.sheet}
           onSave={p.saveNow}
           onToggleSheet={() => p.setSheet(!p.sheet)}

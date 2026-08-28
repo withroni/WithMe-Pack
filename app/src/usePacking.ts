@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AppState } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { PACKS, RECOGNIZED } from './data/packs';
 import { recognizeItems, scanConfigured } from './scan';
@@ -101,6 +102,18 @@ export function usePacking() {
     return () => clearTimeout(id);
   }, [ready, list, hist]);
 
+  // A debounced write is still pending for up to 300ms, and Android can kill the
+  // process the moment the app leaves the foreground — swipe it out of recents
+  // right after checking something and that write never lands. Flush on the way
+  // out. Reads the refs so it always writes the newest values, not this render's.
+  useEffect(() => {
+    if (!ready) return;
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state !== 'active') save({ list: listRef.current, hist: histRef.current });
+    });
+    return () => sub.remove();
+  }, [ready]);
+
   useEffect(
     () => () => {
       if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -141,7 +154,10 @@ export function usePacking() {
   const left = n - p;
   const pct = n ? (p / n) * 100 : 0;
   const allDone = n > 0 && left === 0;
-  const canAct = n > 0 && !allDone && !sheet;
+  // Saving stays available once everything is checked — a fully packed list is
+  // the most natural thing to archive. Only 전부 has nothing left to do.
+  const canSave = n > 0 && !sheet;
+  const canCheckAll = n > 0 && !allDone && !sheet;
 
   // ---- mutations ----------------------------------------------------------
   const flashBump = useCallback((id: string) => {
@@ -264,17 +280,17 @@ export function usePacking() {
   );
 
   const saveNow = useCallback(() => {
-    if (!canAct) return;
-    restart(`${left}개 남긴 채로 저장했어요`);
-  }, [canAct, left, restart]);
+    if (!canSave) return;
+    restart(left > 0 ? `${left}개 남긴 채로 저장했어요` : '다 챙긴 목록을 보관함에 넣었어요');
+  }, [canSave, left, restart]);
 
   const checkAll = useCallback(() => {
     const cur = listRef.current;
-    if (!canAct || !cur) return;
+    if (!canCheckAll || !cur) return;
     setList({ ...cur, items: cur.items.map((i) => ({ ...i, done: true })) });
     flashBump('all');
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
-  }, [canAct, setList, flashBump]);
+  }, [canCheckAll, setList, flashBump]);
 
   const restoreSnapshot = useCallback(
     (h: Snapshot) => {
@@ -344,7 +360,7 @@ export function usePacking() {
   return useMemo(
     () => ({
       ready, screen, list, hist, items,
-      n, p, left, pct, allDone, canAct,
+      n, p, left, pct, allDone, canSave, canCheckAll,
       sheet, setSheet,
       draft, setDraft, addItem,
       editing, editDraft, setEditDraft, startEdit, commitEdit, cancelEdit,
@@ -355,7 +371,7 @@ export function usePacking() {
       scan, scanning, photo, candidates, sel, beginScan, closeScan, toggleToken, acceptScan,
     }),
     [
-      ready, screen, list, hist, items, n, p, left, pct, allDone, canAct, sheet, draft,
+      ready, screen, list, hist, items, n, p, left, pct, allDone, canSave, canCheckAll, sheet, draft,
       editing, editDraft, renaming, nameDraft, bump, toastMsg, undo, doUndo, hideToast,
       addItem, commitEdit, startEdit, cancelEdit, startRename, commitName, cancelRename,
       seed, startPack, toggle, remove, restart, saveNow, checkAll, restoreSnapshot,
