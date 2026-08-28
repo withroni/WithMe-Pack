@@ -49,8 +49,10 @@ jobs:
 
       - name: Raise the Gradle heap
         # prebuild writes 2GB, which the New Architecture build can exhaust on a
-        # runner. Later keys win in a properties file, so appending is enough.
-        run: echo "org.gradle.jvmargs=-Xmx5g -XX:MaxMetaspaceSize=1g" >> android/gradle.properties
+        # runner. Later keys win in a properties file, so appending is enough —
+        # but the generated file has no trailing newline, so lead with one or
+        # this lands on the end of the last property and corrupts it.
+        run: printf '\n%s\n' 'org.gradle.jvmargs=-Xmx5g -XX:MaxMetaspaceSize=1g' >> android/gradle.properties
 
       - name: Build release APK
         # Expo's template signs `release` with its bundled debug keystore, so
