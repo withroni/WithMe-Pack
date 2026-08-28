@@ -47,6 +47,11 @@ jobs:
         # config plugins (icons, splash, stripped permissions) always apply.
         run: npx expo prebuild --platform android --no-install
 
+      - name: Raise the Gradle heap
+        # prebuild writes 2GB, which the New Architecture build can exhaust on a
+        # runner. Later keys win in a properties file, so appending is enough.
+        run: echo "org.gradle.jvmargs=-Xmx5g -XX:MaxMetaspaceSize=1g" >> android/gradle.properties
+
       - name: Build release APK
         # Expo's template signs `release` with its bundled debug keystore, so
         # this comes out directly installable. Fine for sideloading and internal
